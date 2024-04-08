@@ -1,8 +1,7 @@
-const startButton = document.getElementById('start-button');
-const nextButton = document.getElementById('next-button');
+const questionElement = document.getElementById('question');
+const answerButtons = document.getElementById('answer-buttons');
 const submitButton = document.getElementById('submit-button');
-const questionContainer = document.getElementById('question-container');
-const resultContainer = document.getElementById('result');
+const resultElement = document.getElementById('result');
 
 let currentQuestionIndex = 0;
 let score = 0;
@@ -34,43 +33,35 @@ const questions = [
     }
 ];
 
-function showQuestion(question) {
-    questionContainer.innerHTML = '';
-    const questionElement = document.createElement('p');
-    questionElement.innerText = question.question;
-    questionContainer.appendChild(questionElement);
-
-    const answerButtons = document.createElement('div');
-    answerButtons.classList.add('btn-grid');
-    question.answers.forEach(answer => {
+function showQuestion() {
+    const currentQuestion = questions[currentQuestionIndex];
+    questionElement.innerText = currentQuestion.question;
+    answerButtons.innerHTML = ''; // Clear existing buttons
+    currentQuestion.answers.forEach(answer => {
         const button = document.createElement('button');
         button.innerText = answer.text;
         button.classList.add('btn');
         button.addEventListener('click', () => selectAnswer(answer));
         answerButtons.appendChild(button);
     });
-    questionContainer.appendChild(answerButtons);
 }
 
 function selectAnswer(answer) {
     if (answer.correct) {
         score++;
     }
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        showQuestion();
+    } else {
+        showResult();
+    }
 }
 
 function showResult() {
-    resultContainer.innerText = 'You got ' + score + '/' + questions.length + ' correct.';
-}
-
-function startQuiz() {
-    startButton.style.display = 'none';
-    nextButton.style.display = 'none';
-    submitButton.style.display = 'block';
-    showQuestion(questions[currentQuestionIndex]);
-}
-
-startButton.addEventListener('click', startQuiz);
-submitButton.addEventListener('click', () => {
-    showResult();
     submitButton.style.display = 'none';
-});
+    resultElement.innerText = 'You got ' + score + '/' + questions.length + ' correct.';
+}
+
+// Initialize the quiz
+showQuestion();
