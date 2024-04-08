@@ -9,14 +9,18 @@
 <body>
     <div class="container">
         <h1>Digital Literacy Quiz</h1>
-        <div id="question-container">
-            <p id="question"></p>
-            <div id="answer-buttons" class="btn-grid">
-            </div>
+        <div id="landing-page">
+            <p>Welcome to the Digital Literacy Quiz! Test your knowledge of basic computer skills.</p>
+            <button id="start-button" class="btn">Start Quiz</button>
         </div>
-        <button id="submit-button" class="btn">Submit</button>
-        <div id="result"></div>
-        <button id="start-button" class="btn">Start Quiz</button>
+        <div id="quiz" style="display: none;">
+            <div id="question-container">
+                <p id="question"></p>
+                <div id="answer-buttons" class="btn-grid"></div>
+            </div>
+            <button id="submit-button" class="btn" style="display: none;">Submit</button>
+            <div id="result" style="display: none;"></div>
+        </div>
     </div>
 
     <script src="script.js"></script>
